@@ -4,7 +4,8 @@ import {
     ScrollView,
     StyleSheet,
     Platform,
-    Alert
+    Alert,
+    KeyboardAvoidingView
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
@@ -96,59 +97,61 @@ const EditProductScreen = props => {
     }, [dispatchFormState]);
 
     return (
-        <ScrollView>
-            <View style={styles.form}>
-                <Input
-                    id="title"
-                    label="Title"
-                    errorText="Please enter a valid title!"
-                    keyboardTyep='default'
-                    autoCapitalize='sentences'
-                    autoCorrect
-                    returnKeyType='next'
-                    onInputChange={inputChangeHandler}
-                    initialValue={editedProduct ? editedProduct.title : ''}
-                    initiallyValid={!!editedProduct}
-                    required
-                />
-                <Input
-                    id="imageUrl"
-                    label="Image Url"
-                    errorText="Please enter a valid image url!"
-                    keyboardTyep='default'
-                    returnKeyType='next'
-                    onInputChange={inputChangeHandler}
-                    initialValue={editedProduct ? editedProduct.imageUrl : ''}
-                    initiallyValid={!!editedProduct}
-                    required
-                    min={0.1}
-                />
-                {editedProduct ? null : (
+        <KeyboardAvoidingView style={{flex: 1}} behavoir="padding" keyboardVerticalOffset={100}>
+            <ScrollView>
+                <View style={styles.form}>
                     <Input
-                        id="price"
-                        label="Price"
-                        errorText="Please enter a valid price!"
-                        keyboardTyep='decimal-pad'
+                        id="title"
+                        label="Title"
+                        errorText="Please enter a valid title!"
+                        keyboardTyep='default'
+                        autoCapitalize='sentences'
+                        autoCorrect
                         returnKeyType='next'
                         onInputChange={inputChangeHandler}
+                        initialValue={editedProduct ? editedProduct.title : ''}
+                        initiallyValid={!!editedProduct}
                         required
                     />
-                )}
-                <Input
-                    id="price"
-                    label="Description"
-                    errorText="Please enter a valid description!"
-                    keyboardTyep='default'
-                    autoCorrect
-                    multiline
-                    numverOfLines={3}
-                    onInputChange={inputChangeHandler}
-                    initialValue={editedProduct ? editedProduct.description : ''}
-                    required
-                    minLenght={5}
-                />
-            </View>
-        </ScrollView>
+                    <Input
+                        id="imageUrl"
+                        label="Image Url"
+                        errorText="Please enter a valid image url!"
+                        keyboardTyep='default'
+                        returnKeyType='next'
+                        onInputChange={inputChangeHandler}
+                        initialValue={editedProduct ? editedProduct.imageUrl : ''}
+                        initiallyValid={!!editedProduct}
+                        required
+                        min={0.1}
+                    />
+                    {editedProduct ? null : (
+                        <Input
+                            id="price"
+                            label="Price"
+                            errorText="Please enter a valid price!"
+                            keyboardTyep='decimal-pad'
+                            returnKeyType='next'
+                            onInputChange={inputChangeHandler}
+                            required
+                        />
+                    )}
+                    <Input
+                        id="price"
+                        label="Description"
+                        errorText="Please enter a valid description!"
+                        keyboardTyep='default'
+                        autoCorrect
+                        multiline
+                        numverOfLines={3}
+                        onInputChange={inputChangeHandler}
+                        initialValue={editedProduct ? editedProduct.description : ''}
+                        required
+                        minLenght={5}
+                    />
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
